@@ -40,8 +40,7 @@ class ClientResource extends Resource
                     ->maxLength(3),
                 Forms\Components\Select::make('gender')
                     ->options(['male','female'])
-                    ->required()
-                    ->maxLength(255),
+                    ->required(),
             ]);
     }
 
