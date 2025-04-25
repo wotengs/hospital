@@ -23,6 +23,8 @@ class ClientFactory extends Factory
             //
             'name' => fake()->unique()->word(),
             'email' => fake()->unique()->safeEmail(),
+            'age' => fake()->numberBetween(18, 80),
+            'gender' => fake()->randomElement(['male', 'female']),
             'phone' => fake()->unique()->phoneNumber(),
             'user_id' => $users->random()->id,
         ];

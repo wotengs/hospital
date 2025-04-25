@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50)->unique();
             $table->string('email')->unique();
+            $table->integer('age');
             $table->string('phone')->unique();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();
