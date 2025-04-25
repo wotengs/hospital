@@ -12,11 +12,17 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+
+    // Specify the table name
+    protected $table = 'users';
+
+
     protected $fillable = [
         'name',
         'email',
@@ -44,5 +50,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function program()
+    {
+        return $this->hasMany(Program::class);
+    }
+
+    public function client()
+    {
+        return $this->hasMany(Client::class);
     }
 }
