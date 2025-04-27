@@ -15,6 +15,19 @@ class Client extends Model
     // Specify the table name
     protected $table = 'clients';
 
+    const GENDER_MALE = 'male';
+
+    const GENDER_FEMALE = 'female';
+
+    const GENDER_DEFAULT = self::GENDER_MALE;
+
+    const GENDERS = [
+
+        self::GENDER_MALE => 'male',
+        self::GENDER_FEMALE => 'female',
+
+    ];
+
     protected $fillable = [
         'name',
         'email',
@@ -42,6 +55,6 @@ class Client extends Model
     // Relationship to clients (many-to-many)
     public function program()
     {
-        return $this->belongsToMany(Program::class, 'client_program')->withPivot(['order'])->withTimestamps(); // Assuming 'client_program' is the pivot table; // Assuming 'learners_program' is the pivot table
+        return $this->belongsToMany(Program::class, 'client_program')->withTimestamps(); // Assuming 'client_program' is the pivot table; // Assuming 'learners_program' is the pivot table
     }
 }

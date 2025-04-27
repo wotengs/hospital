@@ -5,10 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
+use App\Models\Program;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup as ActionsActionGroup;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -17,7 +20,9 @@ class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -25,7 +30,8 @@ class ClientResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(50),
+                    ->maxLength(50)
+                    ->label('Full Name'),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
@@ -39,7 +45,10 @@ class ClientResource extends Resource
                     ->required()
                     ->maxLength(3),
                 Forms\Components\Select::make('gender')
-                    ->options(['male','female'])
+                    ->options(Client::GENDERS)
+                    ->required(),
+                Forms\Components\CheckboxList::make('program')
+                ->relationship('program', 'name')
                     ->required(),
             ]);
     }
@@ -49,14 +58,21 @@ class ClientResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable()
+                    ->label('Name'),
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable()
+                    ->label('Email'),
                 Tables\Columns\TextColumn::make('phone')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->searchable()
+                    ->toggleable()
+                    ->label('Phone'),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->sortable()
+                    ->toggleable()
+                    ->label('Added By'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -70,7 +86,11 @@ class ClientResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])->color('info')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

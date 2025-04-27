@@ -38,6 +38,6 @@ class Program extends Model
     // Relationship to clients (many-to-many)
     public function client()
     {
-        return $this->belongsToMany(Client::class, 'client_program')->withPivot(['order'])->withTimestamps(); // Assuming 'learners_program' is the pivot table
+        return $this->belongsToMany(Client::class, 'client_program')->withTimestamps(); // Assuming 'learners_program' is the pivot table
     }
 }
