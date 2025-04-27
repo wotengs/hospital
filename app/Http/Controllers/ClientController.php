@@ -5,9 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Http\Resources\ClientResource;
 
 class ClientController extends Controller
 {
+
+        /**
+     * Display the specified resource.
+     */
+    public function show(Client $client)
+    {
+            /**
+     * Display the specified client.
+     */
+
+        // Eager-load programs relationship
+        $client->load('program');
+
+        // Return the resource (auto-wrapped in "data")
+        return new ClientResource($client);
+    
+    }
     /**
      * Display a listing of the resource.
      */
@@ -32,13 +50,7 @@ class ClientController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Client $client)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
