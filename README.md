@@ -1,61 +1,193 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Hospital
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple health management platform built with **Laravel 12** and **Filament 3.3**.
 
-## About Laravel
+The system allows doctors (authenticated users) to:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Create health programs (e.g., TB, Malaria, HIV).
+- Register new clients (patients).
+- Enroll clients into one or more programs.
+- Search for and view client profiles.
+- Expose client profile data via a secure API for external systems.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+> Developed as part of a **Software Engineering Internship Assignment** @ CEMA.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Laravel** 12.x
+- **Filament** 3.3
+- **Sanctum** (API Authentication)
+- **PestPHP** (Testing Framework)
+- **MySQL** (or any database supported by Laravel)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📦 Installation
 
-## Laravel Sponsors
+> Ensure you have **PHP 8.2+**, **Composer 2.5+**, **Node.js 18+**, and **MySQL** installed.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Clone the Repository
 
-### Premium Partners
+```bash
+git clone https://github.com/wotengs/hospital.git
+cd hospital
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+2. Install PHP Dependencies
 
-## Contributing
+composer install
+3. Install Node.js Dependencies (for Filament assets)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+npm install && npm run build
+4. Set Up Environment Variables
 
-## Code of Conduct
+cp .env.example .env
+Edit the .env file with your local DB credentials:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+DB_DATABASE=hospital
+DB_USERNAME=root
+DB_PASSWORD=yourpassword
+5. Generate Application Key
 
-## Security Vulnerabilities
+php artisan key:generate
+6. Set Up Database
+Create a new database manually called hospital (or whatever name you chose in .env).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Then run:
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+php artisan migrate --seed
+This will create tables and seed the database with test data.
+
+🔐 Authentication
+This project uses Sanctum for API authentication.
+
+Log in through the Filament Admin Panel.
+
+Use Sanctum endpoints to authenticate for API access.
+
+API requests must include a Bearer token.
+
+🛠 Development Workflow
+
+Command Purpose
+php artisan migrate:fresh --seed Reset and seed the database
+php artisan serve Serve the app at localhost:8000
+npm run build Build frontend assets
+npm run dev Watch frontend assets in development
+📚 Features
+✅ Program Management (Create/Edit/Delete health programs)
+✅ Client Registration and Management
+✅ Enroll Clients into Multiple Programs
+✅ Search Clients
+✅ Client Profile Viewing
+✅ Secure API for External Access to Client Profiles
+✅ Authenticated Admin Dashboard via Filament
+✅ Database Seeding for Quick Setup
+✅ Sanctum-based API Authentication
+✅ Modern Testing Setup with PestPHP
+
+📖 API Endpoints
+
+Method Endpoint Description
+GET /api/clients/{id} Retrieve a client's profile
+POST /api/login (Sanctum) Login and retrieve token
+Ensure you pass the Bearer token for all protected API routes.
+
+🧱 Project Structure Highlights
+app/Models/Client.php – Client Eloquent model
+
+app/Models/Program.php – Program Eloquent model
+
+app/Filament/Resources/ – Filament resource classes
+
+routes/web.php – Web routes
+
+routes/api.php – API routes
+
+database/factories/ – Model factories
+
+database/seeders/ – Seeders for Clients and Programs
+
+🕓 Commit History Summary
+First commit — Initial project setup for "Hospital" (Laravel 12 + Filament 3.3)
+
+Back-end Complete — Models, relationships, factories, and seeders ready
+
+CRUD Completed — Client and Program management through Filament
+
+Validation Improvements — Form validation for ClientResource
+
+UI Enhancements — Navigation, icons, and UX updates
+
+API Added — Secure API exposure for client profiles via Sanctum
+
+Final Touches — Polished ProgramResource with symptoms support
+
+📸 Screenshots
+(Add some Filament Admin screenshots here if you want — optional but looks professional.)
+
+📜 License
+This project is for educational use.
+Feel free to modify and build upon it.
+
+✅ Ready to Run!
+Spin up the app locally:
+
+bash
+Copy
+Edit
+php artisan serve
+Login to the Filament dashboard at:
+
+http://localhost:8000/admin
+
+⚡ Quick Notes
+Built according to Laravel 12 official docs: Laravel 12.x Docs
+
+Uses Filament 3.3 for a fast, beautiful Admin UI.
+
+API is protected with Sanctum tokens.
+
+Modern PestPHP test setup included.
+
+📢 Pro Tip
+If preparing for production:
+
+Set up SSL (HTTPS).
+
+Use Horizon for queue management.
+
+Schedule regular database backups.
+
+Protect your /admin login with extra security (2FA, IP restrictions, etc).
+
+📝 Example .env Format
+dotenv
+Copy
+Edit
+APP_NAME=Hospital
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=hospital
+DB_USERNAME=root
+DB_PASSWORD=yourpassword
+
+SANCTUM_STATEFUL_DOMAINS=localhost:8000
+SESSION_DOMAIN=localhost
+✅ Done.
+This will paste cleanly into your README.md and looks solid even for recruiters or open-source contributors.
+
+✅ That's your actual full file. No code fencing around the whole thing.
+✅ Ready to paste.
+✅ Real README.md material.
+✅ Will render exactly right on GitHub or GitLab.
