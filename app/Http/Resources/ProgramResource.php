@@ -17,7 +17,7 @@ class ProgramResource extends JsonResource
         return [
             'id'          => $this->id,
             'name'        => $this->name,
-            'description' => $this->description,
+            'symptoms' => $this->symptoms,
             // Include pivot field if it exists
             // 'enrolled_at' => $this->pivot->enrolled_at,
         ];
