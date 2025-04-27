@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Program extends Model
 {
@@ -31,12 +33,12 @@ class Program extends Model
         ];
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
     // Relationship to clients (many-to-many)
-    public function client()
+    public function client(): BelongsToMany
     {
         return $this->belongsToMany(Client::class, 'client_program')->withTimestamps(); // Assuming 'learners_program' is the pivot table
     }
